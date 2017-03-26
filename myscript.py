@@ -30,19 +30,19 @@ class my_webbrowser:
 				cmd_lst = cmd.split()
 				if cmd_lst[0] == '/help':
 					my_webbrowser.webbrowser_help()
-				elif cmd_lst[0] == '/gs':
+				elif cmd_lst[0].lower() == '/gs':
 					gg_search = ' '.join(cmd_lst[1:])
 					gg_search = gg_search.split()
 					gg_search = '+'.join(gg_search)
 					url = 'https://www.google.com.vn/#q='+gg_search
 					webbrowser.open_new(url)
-				elif cmd_lst[0] == '/ys':
+				elif cmd_lst[0].lower() == '/ys':
 					yt_search = ' '.join(cmd_lst[1:])
 					yt_search = yt_search.split()
 					yt_search = '+'.join(yt_search)
 					url = 'https://www.youtube.com/results?search_query='+yt_search
 					webbrowser.open_new(url)	
-				elif cmd_lst[0] == '/bm':
+				elif cmd_lst[0].lower() == '/bm':
 					print('|                                                                                                 |')
 					print("+-------------------------------------------------------------------------------------------------+")
 					menu()
@@ -75,30 +75,30 @@ class my_deencode:
 		print('|')	
 
 	def decode(data, option):
-		if option == '-b64':
+		if option.lower() == '-b64':
 			decoded = base64.b64decode(data.encode('ascii'))
 			return '| ' + decoded.decode('ascii')
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
 	def encode(data, option):
-		if option == '-b64':
+		if option.lower() == '-b64':
 			encoded = base64.b64encode(data.encode('ascii'))
 			return '| ' + str(encoded.decode('ascii'))
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
 	def hash(data, option):
-		if option == '-sha1':
+		if option.lower() == '-sha1':
 			hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
-		elif option == '-sha256':
+		elif option.lower() == '-sha256':
 			hashed = hashlib.sha256(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
-		elif option == '-sha384':
+		elif option.lower() == '-sha384':
 			hashed = hashlib.sha384(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
-		elif option == '-sha512':
+		elif option.lower() == '-sha512':
 			hashed = hashlib.sha512(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
 		else:
@@ -110,27 +110,27 @@ class my_deencode:
 			cmd = cmd.strip()
 			if cmd[0] == '/':
 				cmd_lst = cmd.split()
-				if cmd_lst[0] == '/help':
+				if cmd_lst[0].lower() == '/help':
 					my_deencode.deencode_help()
-				elif cmd_lst[0] == '/en':
+				elif cmd_lst[0].lower() == '/en':
 					if cmd_lst[1][0] == '-':
 						print(my_deencode.encode(' '.join(cmd_lst[2:]), cmd_lst[1]))
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
-				elif cmd_lst[0] == '/de':
+				elif cmd_lst[0].lower() == '/de':
 					if cmd_lst[1][0] == '-':
 						print(my_deencode.decode(' '.join(cmd_lst[2:]), cmd_lst[1]))
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
-				elif cmd_lst[0] == '/hash':
+				elif cmd_lst[0].lower() == '/hash':
 					if cmd_lst[1][0] == '-':
 						print(my_deencode.hash(' '.join(cmd_lst[2:]), cmd_lst[1]))
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
-				elif cmd_lst[0] == '/bm':
+				elif cmd_lst[0].lower() == '/bm':
 					print('|                                                                                                 |')
 					print("+-------------------------------------------------------------------------------------------------+")
 					menu()
@@ -175,8 +175,6 @@ def main_menu():
                                     |                         |
                                     | 2. Decode/Encode        |
                                     |                         |
-                                    | 3. Exit                 |
-                                    |                         |
                                     |                         |
                                     |      © Copyright Gr^k-T |
                                     |                         |
@@ -203,9 +201,9 @@ def menu():
 		elif cmd == '2':
 			my_deencode.deencode_help()
 			my_deencode.deencode_process()
-		elif cmd == '3' or cmd == 'exit':
+		elif cmd.lower() == 'exit':
 			exit()
-		elif cmd == '/help':
+		elif cmd.lower() == '/help':
 			print("""|
 | Infomation help
 |""")
