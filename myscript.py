@@ -203,7 +203,7 @@ def menu():
 		elif cmd == '2':
 			my_deencode.deencode_help()
 			my_deencode.deencode_process()
-		elif cmd == '3':
+		elif cmd == '3' or cmd == 'exit':
 			exit()
 		elif cmd == '/help':
 			print("""|
