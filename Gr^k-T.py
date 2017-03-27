@@ -66,9 +66,12 @@ class my_deencode:
 		print('| | Type "/hash + [option] + something" to hash something with your option.|')
 		print('| | [option] #hash                                                         |')
 		print('| | -sha1  : SHA-1                                                         |')
+		print('| | -sha224: SHA-224                                                       |')
 		print('| | -sha256: SHA-256                                                       |')
 		print('| | -sha384: SHA-384                                                       |')
 		print('| | -sha512: SHA-512                                                       |')
+		print('| | -shake128[length]: SHAKE-128                                           |')
+		print('| | -shake256[length]: SHAKE-256                                           |')
 		print('| | Type "/bm" to back the main menu.                                      |')
 		print('| | Type "/help" for more information about Decode/Encode                  |')
 		print('| +========================================================================+')
@@ -92,6 +95,9 @@ class my_deencode:
 		if option.lower() == '-sha1':
 			hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
+		elif option.lower() == '-sha224':
+			hashed = hashlib.sha224(data.encode('ascii')).hexdigest()
+			return '| ' + hashed
 		elif option.lower() == '-sha256':
 			hashed = hashlib.sha256(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
@@ -101,6 +107,50 @@ class my_deencode:
 		elif option.lower() == '-sha512':
 			hashed = hashlib.sha512(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
+		elif option.lower().startswith('-shake128'):
+			if option.count('[') > 1 or option.count(']') > 1:
+				return '| Invalid length'
+			elif '[' in option.lower() and ']' in option.lower():
+				length = option[option.index('[')+1:option.index(']')]
+				check_length = is_number(length)
+				check_float = is_float(length)
+				if check_float:
+					check_length = 'float'
+				if length.count('-') == 1 and (check_length == 'float' or check_length):
+					check_length = 'sub'
+				if check_length == 'float':
+					return '| length must be int, not float'
+				elif check_length == 'sub':
+					return '| length must be greater or equal 0'
+				elif check_length:
+					hashed = hashlib.shake_128(data.encode('ascii')).hexdigest(int(length))
+					return '| ' + hashed
+				else:
+					return '| length must be int, not string'
+			else:
+				return "| Required argument 'length'"
+		elif option.lower().startswith('-shake256'):
+			if option.count('[') > 1 or option.count(']') > 1:
+				return '| Invalid length'
+			elif '[' in option.lower() and ']' in option.lower():
+				length = option[option.index('[')+1:option.index(']')]
+				check_length = is_number(length)
+				check_float = is_float(length)
+				if check_float:
+					check_length = 'float'
+				if length.count('-') == 1 and (check_length == 'float' or check_length):
+					check_length = 'sub'
+				if check_length == 'float':
+					return '| length must be int, not float'
+				elif check_length == 'sub':
+					return '| length must be greater or equal 0'
+				elif check_length:
+					hashed = hashlib.shake_256(data.encode('ascii')).hexdigest(int(length))
+					return '| ' + hashed
+				else:
+					return '| length must be int, not string'
+			else:
+				return "| Required argument 'length'"
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
@@ -141,54 +191,74 @@ class my_deencode:
 				print('| \'{}\': command not found'.format(cmd))
 				print('| Type "/help" for more information')
 
+#helping functions
+
+def is_number(n):
+	try:
+		int(n)
+		return True
+	except:
+		return False
+
+def is_float(n):
+	if n.count('.') != 1:
+		return False
+	else:
+		try:
+			int(n[:n.index('.')])
+			int(n[n.index('.')+1:])
+			return True
+		except:
+			return False
+
 def introduction():
 	print("""
 				
 				            Nguyen Thanh Trung — Gr^k-T
 
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNN+:::::::::::::::::::::::::::::::+NNNNNNNN
-				NNNNNNNNN:                               :NNNNNNNN
-				NNNNNNNNN:                               :NNNNNNNN
-				NNNNNNNNN:      ........................./NNNNNNNN
-				NNNNNNNNN:      yNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNN:      yNmhhhhhhhhhhhhhhhhhhhhmNNNNNNNNNN
-				NNNNNNNNN:      yNNNhs/.               sNNNNNNNNNN
-				NNNNNNNNN:      yNNNNNNNmho/.          sNNNNNNNNNN
-				NNNNNNNNN:      yNNNNNNNNNNNNmy/       sNNNNNNNNNN
-				NNNNNNNNN:      yNNNNNNNNmho/.         sNNNNNNNNNN
-				NNNNNNNNN:      yNNNdyo:.              sNNNNNNNNNN
-				NNNNNNNNN:      ++-`              -/shmNNNNNNNNNNN
-				NNNNNNNNN:                  `-/shNNNNNNNNNNNNNNNNN
-				NNNNNNNNN:             `-+sdNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNN:        `:+ydNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNN:   `:+ydNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNooymNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-				NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTT+:::::::::::::::::::::::::::::::+TTTTTTTT
+				TTTTTTTTT:                               :TTTTTTTT
+				TTTTTTTTT:                               :TTTTTTTT
+				TTTTTTTTT:      ........................./TTTTTTTT
+				TTTTTTTTT:      :25/06/2016-ateotsmerthdTTTTTTTTTT
+				TTTTTTTTT:      :NguyenThanhTrung?$=???+TTTTTTTTTT
+				TTTTTTTTT:      :Trung/.               :TTTTTTTTTT
+				TTTTTTTTT:      :ThanhTrung/.          :TTTTTTTTTT
+				TTTTTTTTT:      :ThanhTrung\^^^/       :TTTTTTTTTT
+				TTTTTTTTT:      :ThanhTrung^^.         :TTTTTTTTTT
+				TTTTTTTTT:      :Trung^^.              :TTTTTTTTTT
+				TTTTTTTTT:      :.-               -/^^TTTTTTTTTTTT
+				TTTTTTTTT:                   -/^^TTTTTTTTTTTTTTTTT
+				TTTTTTTTT:              -+^^TTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTT:         :+^^TTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTT:    :+^^TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTT+25/06TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 """)
-	time.sleep(3)
+	input()
 	print('\n'*10)
 
 def main_menu():
 	print("""
-                                    +=========================+
-                                    |                         |
-                                    |        MAIN MENU        |
-                                    |                         |
-                                    | 1. Use Browser          |
-                                    |                         |
-                                    | 2. Decode/Encode        |
-                                    |                         |
-                                    |                         |
-                                    |      © Copyright Gr^k-T |
-                                    |                         |
-                                    +=========================+
+                                    +============================+
+                                    |                            |
+                                    |        MAIN MENU           |
+                                    |                            |
+                                    | 1. Use Browser             |
+                                    |                            |
+                                    | 2. Decode/Encode - Hash    |
+                                    |                            |
+                                    |                            |
+                                    |      © Copyright Gr^k-T    |
+                                    |                            |
+                                    +============================+
 """)
 	print("+-------------------------------------------------------------------------------------------------+")
 	print("| >_                                       root@Gr^k-T: ~                                         |")
@@ -213,6 +283,8 @@ def menu():
 			my_deencode.deencode_process()
 		elif cmd.lower() == 'exit':
 			exit()
+		elif (cmd.lower()).startswith('cd'):
+			print('| Cannot change directory')
 		elif cmd.lower() == '/help':
 			print("""|
 | Infomation help
