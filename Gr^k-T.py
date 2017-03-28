@@ -285,7 +285,7 @@ def menu():
 			exit()
 		elif (cmd.lower()).startswith('cd'):
 			print('| Cannot change directory')
-		elif cmd.lower() == '/help':
+		elif cmd.lower() == '/help' or cmd.lower() == 'help':
 			print("""|
 | Infomation help
 |""")
