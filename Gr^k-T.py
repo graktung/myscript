@@ -288,6 +288,8 @@ def menu():
 		elif cmd.lower() == '/help' or cmd.lower() == 'help':
 			print("""|
 | Infomation help
+|
+| Choose the item by type its number.
 |""")
 		else:
 			subprocess.call(cmd, shell=True)
