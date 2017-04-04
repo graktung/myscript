@@ -16,11 +16,15 @@ class my_webbrowser:
 	def webbrowser_help():
 		print('|')
 		print('| +================================================================+')
+		print('| |                                                                |')
 		print('| |                       /help BROWSER                            |')
+		print('| |                                                                |')
 		print('| | Type "/gs + something" to search something with Google.        |')
 		print('| | Type "/ys + something" to search something with YouTube.       |')
+		print('| |                                                                |')
 		print('| | Type "/bm" to back the main menu.                              |')
 		print('| | Type "/help" for more information about BROWSER.               |')
+		print('| |                                                                |')
 		print('| +================================================================+')
 		print('|')
 
@@ -60,13 +64,19 @@ class my_deencode:
 	def deencode_help():
 		print('|')
 		print('| +========================================================================+')
+		print('| |                                                                        |')
 		print('| |                       /help Decode/Encode                              |')
-		print('| | Type "/de + [option] + something" to decode with your option.          |')
-		print('| | Type "/en + [option] + something" to encode with your option.          |')
+		print('| |                                                                        |')
+		print('| | Type "/de + [option] + data" to decode data with your option.          |')
+		print('| | Type "/en + [option] + data" to encode data with your option.          |')
+		print('| |                                                                        |')
 		print('| | [option]                                                               |')
 		print('| | -b64: base64                                                           |')
 		print('| | -ce[k]: Ceasar #decode does not require [k]                            |')
-		print('| | Type "/hash + [option] + something" to hash something with your option.|')
+		print('| |                                                                        |')
+		print('| |                                                                        |')
+		print('| | Type "/hash + [option] + data" to hash your data with your option.     |')
+		print('| |                                                                        |')
 		print('| | [option] #hash                                                         |')
 		print('| | -sha1  : SHA-1                                                         |')
 		print('| | -sha224: SHA-224                                                       |')
@@ -75,8 +85,10 @@ class my_deencode:
 		print('| | -sha512: SHA-512                                                       |')
 		print('| | -shake128[length]: SHAKE-128                                           |')
 		print('| | -shake256[length]: SHAKE-256                                           |')
+		print('| |                                                                        |')
 		print('| | Type "/bm" to back the main menu.                                      |')
 		print('| | Type "/help" for more information about Decode/Encode                  |')
+		print('| |                                                                        |')
 		print('| +========================================================================+')
 		print('|')	
 
@@ -84,7 +96,10 @@ class my_deencode:
 		if data == '':
 			return '| Require data argument. None is given'
 		elif option.lower() == '-b64':
-			decoded = base64.b64decode(data.encode('ascii'))
+			try:
+				decoded = base64.b64decode(data.encode('ascii'))
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'%c\' given' %data
 			return '| ' + decoded.decode('ascii')
 		elif option.lower() == '-ce':
 			data = data.upper().split()
@@ -96,7 +111,7 @@ class my_deencode:
 					try:
 						decoded[i-1].append(full_ascii_char[full_ascii_char.index(data[j]) - i])
 					except ValueError:
-						return 'ValueError. Char must be in alphabet. %c given' %data[j]
+						return '| ValueError. Your data contains invalid alphabet. \'%c\' given' %data[j]
 			for i in range(len(decoded)):
 				k = i + 1
 				if k < 10: k = '0' + str(k)
@@ -109,7 +124,10 @@ class my_deencode:
 		if data == '':
 			return '| Require data argument. None is given'
 		elif option.lower() == '-b64':
-			encoded = base64.b64encode(data.encode('ascii'))
+			try:
+				encoded = base64.b64encode(data.encode('ascii'))
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'%c\' given' %data
 			return '| ' + str(encoded.decode('ascii'))
 		elif option.lower().startswith('-ce['):
 			if option.count('[') > 1 or option.count(']') > 1:
@@ -127,8 +145,18 @@ class my_deencode:
 				elif check_k == 'sub':
 					return '| k must be greater or equal 0'
 				elif check_k:
-					hashed = hashlib.shake_128(data.encode('ascii')).hexdigest(int(k))
-					return '| ' + hashed
+					k = int(k)
+					data = data.upper().split()
+					data = ''.join(x for x in data)
+					encoded = []
+					for i in range(len(data)):
+						try:
+							index_append = full_ascii_char.index(data[i])+k
+							if index_append > 25: index_append %= 26
+							encoded.append(full_ascii_char[index_append])
+						except ValueError:
+							return '| ValueError. Your data contains invalid alphabet. \'%c\' given' %data[i]
+					return '| ' + ''.join(x for x in encoded)
 				else:
 					return '| k must be int, not string'
 			else:
@@ -140,19 +168,34 @@ class my_deencode:
 		if data == '':
 			return '| Require data argument. None is given'
 		elif option.lower() == '-sha1':
-			hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
+			try:
+				hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return '| ' + hashed
 		elif option.lower() == '-sha224':
-			hashed = hashlib.sha224(data.encode('ascii')).hexdigest()
+			try:
+				hashed = hashlib.sha224(data.encode('ascii')).hexdigest()
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return '| ' + hashed
 		elif option.lower() == '-sha256':
-			hashed = hashlib.sha256(data.encode('ascii')).hexdigest()
+			try:
+				hashed = hashlib.sha256(data.encode('ascii')).hexdigest()
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return '| ' + hashed
 		elif option.lower() == '-sha384':
-			hashed = hashlib.sha384(data.encode('ascii')).hexdigest()
+			try:
+				hashed = hashlib.sha384(data.encode('ascii')).hexdigest()
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return '| ' + hashed
 		elif option.lower() == '-sha512':
-			hashed = hashlib.sha512(data.encode('ascii')).hexdigest()
+			try:
+				hashed = hashlib.sha512(data.encode('ascii')).hexdigest()
+			except ValueError:
+				return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return '| ' + hashed
 		elif option.lower().startswith('-shake128['):
 			if option.count('[') > 1 or option.count(']') > 1:
@@ -170,7 +213,10 @@ class my_deencode:
 				elif check_length == 'sub':
 					return '| length must be greater or equal 0'
 				elif check_length:
-					hashed = hashlib.shake_128(data.encode('ascii')).hexdigest(int(length))
+					try:
+						hashed = hashlib.shake_128(data.encode('ascii')).hexdigest(int(length))
+					except ValueError:
+						return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 					return '| ' + hashed
 				else:
 					return '| length must be int, not string'
@@ -192,7 +238,10 @@ class my_deencode:
 				elif check_length == 'sub':
 					return '| length must be greater or equal 0'
 				elif check_length:
-					hashed = hashlib.shake_256(data.encode('ascii')).hexdigest(int(length))
+					try:
+						hashed = hashlib.shake_256(data.encode('ascii')).hexdigest(int(length))
+					except ValueError:
+						return '| ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 					return '| ' + hashed
 				else:
 					return '| length must be int, not string'
