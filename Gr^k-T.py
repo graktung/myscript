@@ -9,6 +9,8 @@ import subprocess
 import base64
 import hashlib
 
+full_ascii_char = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
 class my_webbrowser:
 
 	def webbrowser_help():
@@ -63,6 +65,7 @@ class my_deencode:
 		print('| | Type "/en + [option] + something" to encode with your option.          |')
 		print('| | [option]                                                               |')
 		print('| | -b64: base64                                                           |')
+		print('| | -ce[k]: Ceasar #decode does not require [k]                            |')
 		print('| | Type "/hash + [option] + something" to hash something with your option.|')
 		print('| | [option] #hash                                                         |')
 		print('| | -sha1  : SHA-1                                                         |')
@@ -78,21 +81,43 @@ class my_deencode:
 		print('|')	
 
 	def decode(data, option):
-		if option.lower() == '-b64':
+		if data == '':
+			return '| Require data argument. None is given'
+		elif option.lower() == '-b64':
 			decoded = base64.b64decode(data.encode('ascii'))
 			return '| ' + decoded.decode('ascii')
+		elif option.lower() == '-ce':
+			data = data.upper().split()
+			data = ''.join(x for x in data)
+			decoded = []
+			for i in range(1, len(full_ascii_char) + 1):
+				decoded.append([])
+				for j in range(len(data)):
+					try:
+						decoded[i-1].append(full_ascii_char[full_ascii_char.index(data[j]) - i])
+					except ValueError:
+						return 'ValueError. Char must be in alphabet. %c given' %data[j]
+			for i in range(len(decoded)):
+				k = i + 1
+				if k < 10: k = int('0' + str(k))
+				print('| With k = %d your decode data is %s' %(i + 1, ''.join(str(x) for x in decoded[i])))										
+			return '|'
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
 	def encode(data, option):
-		if option.lower() == '-b64':
+		if data == '':
+			return '| Require data argument. None is given'
+		elif option.lower() == '-b64':
 			encoded = base64.b64encode(data.encode('ascii'))
 			return '| ' + str(encoded.decode('ascii'))
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
 	def hash(data, option):
-		if option.lower() == '-sha1':
+		if data == '':
+			return '| Require data argument. None is given'
+		elif option.lower() == '-sha1':
 			hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
 		elif option.lower() == '-sha224':
@@ -164,19 +189,22 @@ class my_deencode:
 					my_deencode.deencode_help()
 				elif cmd_lst[0].lower() == '/en':
 					if cmd_lst[1][0] == '-':
-						print(my_deencode.encode(' '.join(cmd_lst[2:]), cmd_lst[1]))
+						decoded = my_deencode.encode(' '.join(cmd_lst[2:]), cmd_lst[1])
+						print(decoded)
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
 				elif cmd_lst[0].lower() == '/de':
 					if cmd_lst[1][0] == '-':
-						print(my_deencode.decode(' '.join(cmd_lst[2:]), cmd_lst[1]))
+						decoded = my_deencode.decode(' '.join(cmd_lst[2:]), cmd_lst[1])
+						print(decoded)
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
 				elif cmd_lst[0].lower() == '/hash':
 					if cmd_lst[1][0] == '-':
-						print(my_deencode.hash(' '.join(cmd_lst[2:]), cmd_lst[1]))
+						decoded = my_deencode.hash(' '.join(cmd_lst[2:]), cmd_lst[1])
+						print(decoded)
 					else:
 						print('| Invalid option. None given')
 						print('| Type /help for more information')
@@ -272,6 +300,7 @@ def read_command(com_input):
 
 def menu():
 	main_menu()
+	print('| Type /help for more information.\n|')
 	while True:
 		cmd = read_command('root@Gr^k-T:~#')
 		cmd = cmd.strip()
