@@ -99,8 +99,8 @@ class my_deencode:
 						return 'ValueError. Char must be in alphabet. %c given' %data[j]
 			for i in range(len(decoded)):
 				k = i + 1
-				if k < 10: k = int('0' + str(k))
-				print('| With k = %d your decode data is %s' %(i + 1, ''.join(str(x) for x in decoded[i])))										
+				if k < 10: k = '0' + str(k)
+				print('| With k = {} your decode data is {}'.format(k, ''.join(x for x in decoded[i])))										
 			return '|'
 		else:
 			return '| Invalid option.\n| Type /help for more information'
@@ -111,6 +111,28 @@ class my_deencode:
 		elif option.lower() == '-b64':
 			encoded = base64.b64encode(data.encode('ascii'))
 			return '| ' + str(encoded.decode('ascii'))
+		elif option.lower().startswith('-ce['):
+			if option.count('[') > 1 or option.count(']') > 1:
+				return "| Invalid 'k'"
+			elif '[' in option.lower() and ']' in option.lower():
+				k = option[option.index('[')+1:option.index(']')]
+				check_k = is_number(k)
+				check_float = is_float(k)
+				if check_float:
+					check_k = 'float'
+				if k.count('-') == 1 and (check_k == 'float' or check_k):
+					check_k = 'sub'
+				if check_k == 'float':
+					return '| k must be int, not float'
+				elif check_k == 'sub':
+					return '| k must be greater or equal 0'
+				elif check_k:
+					hashed = hashlib.shake_128(data.encode('ascii')).hexdigest(int(k))
+					return '| ' + hashed
+				else:
+					return '| k must be int, not string'
+			else:
+				return "| Required argument 'k'"
 		else:
 			return '| Invalid option.\n| Type /help for more information'
 
@@ -132,7 +154,7 @@ class my_deencode:
 		elif option.lower() == '-sha512':
 			hashed = hashlib.sha512(data.encode('ascii')).hexdigest()
 			return '| ' + hashed
-		elif option.lower().startswith('-shake128'):
+		elif option.lower().startswith('-shake128['):
 			if option.count('[') > 1 or option.count(']') > 1:
 				return '| Invalid length'
 			elif '[' in option.lower() and ']' in option.lower():
@@ -154,7 +176,7 @@ class my_deencode:
 					return '| length must be int, not string'
 			else:
 				return "| Required argument 'length'"
-		elif option.lower().startswith('-shake256'):
+		elif option.lower().startswith('-shake256['):
 			if option.count('[') > 1 or option.count(']') > 1:
 				return '| Invalid length'
 			elif '[' in option.lower() and ']' in option.lower():
