@@ -380,7 +380,6 @@ def menu():
 	print('Type /help for more information.\n')
 	while True:
 		cmd = read_command('root@Gr^k-T:~#')
-		cmd = cmd.strip()
 		if cmd == '1':
 			my_webbrowser.webbrowser_help()
 			my_webbrowser.webbrowser_process()
