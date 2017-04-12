@@ -77,6 +77,7 @@ class my_deencode:
 		print(' 		| Type "/hash + [option] + data" to hash your data with your option.     |')
 		print(' 		|                                                                        |')
 		print(' 		| [option] #hash                                                         |')
+		print(' 		| -md5   : MD5                                                           |')
 		print(' 		| -sha1  : SHA-1                                                         |')
 		print(' 		| -sha224: SHA-224                                                       |')
 		print(' 		| -sha256: SHA-256                                                       |')
@@ -166,6 +167,12 @@ class my_deencode:
 	def hash(data, option):
 		if data == '':
 			return 'Require data argument. None is given'
+		elif option.lower() == '-md5':
+			try:
+				hashed = hashlib.md5(data.encode('ascii')).hexdigest()
+				return hashed
+			except ValueError:
+				return 'ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 		elif option.lower() == '-sha1':
 			try:
 				hashed = hashlib.sha1(data.encode('ascii')).hexdigest()
@@ -247,7 +254,7 @@ class my_deencode:
 			else:
 				return "Required argument 'length'"
 		else:
-			return 'Invalid option.\n Type /help for more information'
+			return 'Invalid option.\nType /help for more information'
 
 	def deencode_process():
 		while True:
