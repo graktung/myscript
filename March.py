@@ -309,6 +309,14 @@ def is_float(n):
 		except:
 			return False
 
+#extra functions
+def __main__help__():
+	print("""
+Infomation help
+
+Choose the item by type its number.
+""")
+
 def introduction():
 	subprocess.call('title = March', shell=True)
 	print("""
@@ -364,6 +372,7 @@ def read_command(com_input):
 	cmd = ''
 	while len(cmd) == 0:
 		cmd = input(com_input+' ')
+		cmd = cmd.strip()
 	return cmd
 
 def menu():
@@ -383,11 +392,7 @@ def menu():
 		elif (cmd.lower()).startswith('cd'):
 			print(' Cannot change directory')
 		elif cmd.lower() == '/help' or cmd.lower() == 'help':
-			print("""
-Infomation help
-
-Choose the item by type its number.
-""")
+			__main__help__()
 		else:
 			subprocess.call(cmd, shell=True)
 
