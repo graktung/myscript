@@ -32,7 +32,6 @@ class my_webbrowser:
 	def webbrowser_process():
 		while True:
 			cmd = read_command('root@Browser:~#')
-			cmd = cmd.strip()
 			if cmd[0] == '/':
 				cmd_lst = cmd.split()
 				if cmd_lst[0] == '/help':
@@ -253,7 +252,6 @@ class my_deencode:
 	def deencode_process():
 		while True:
 			cmd = read_command('root@De/Encode:~#')
-			cmd = cmd.strip()
 			if cmd[0] == '/':
 				cmd_lst = cmd.split()
 				if cmd_lst[0].lower() == '/help':
