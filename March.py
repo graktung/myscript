@@ -9,6 +9,8 @@ import sys
 import subprocess
 import base64
 import hashlib
+import random, requests
+from bs4 import BeautifulSoup
 
 full_ascii_char = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -20,8 +22,9 @@ class my_webbrowser:
 		print(' 		|                                                                |')
 		print(' 		|                       /help BROWSER                            |')
 		print(' 		|                                                                |')
-		print(' 		| Type "/gs + something" to search something with Google.        |')
-		print(' 		| Type "/ys + something" to search something with YouTube.       |')
+		print(' 		| Type "/gs + <something>" to search something with Google.      |')
+		print(' 		| Type "/ys + <something>" to search something with YouTube.     |')
+		print(' 		| Type "/gi + <q>" to see <q> images.                            |')
 		print(' 		|                                                                |')
 		print(' 		| Type "/bm" to back the main menu.                              |')
 		print(' 		| Type "/help" for more information about BROWSER.               |')
@@ -47,7 +50,26 @@ class my_webbrowser:
 					yt_search = yt_search.split()
 					yt_search = '+'.join(yt_search)
 					url = 'https://www.youtube.com/results?search_query='+yt_search
-					webbrowser.open_new(url)	
+					webbrowser.open_new(url)
+				elif cmd_lst[0].lower() == "/gi":
+					image_list = []
+					complete_image_list = []
+					i = 1
+					num = ' '.join(cmd_lst[1:])
+					if is_number(num) == True:
+						num = int(num)
+						if is_positive(num) == True:
+							while i <= num:
+								random_image = random.choice(my_webbrowser.get_image())
+								image_list.append(random_image)
+								i+=1
+							for each in image_list:
+								if each not in complete_image_list:
+									complete_image_list.append(each)
+							for image in complete_image_list:
+								webbrowser.open(image)
+					else:
+						"ValueError: '<q>' must be int and positive. '{}' is given".format(num)	
 				elif cmd_lst[0].lower() == '/bm':
 					print('\n')
 					menu()
@@ -56,7 +78,17 @@ class my_webbrowser:
 					print('Type "/help" for more information')
 			else:
 				print('\'{}\': command not found'.format(cmd))
-				print('Type "/help" for more information')	
+				print('Type "/help" for more information')
+	def get_image():
+		put_link_here = []
+		url = "http://www.desktopexchange.net/beach-pictures/beach-girls-wallpapers/"
+		source = requests.get(url)
+		text = source.text
+		soup = BeautifulSoup(text, 'lxml')
+		for image in soup.find_all('a', {'rel':'attachment'}):
+			link = image.get('href')
+			put_link_here.append(link)
+		return put_link_here
 
 class my_deencode:
 
@@ -66,15 +98,15 @@ class my_deencode:
 		print(' 		|                                                                        |')
 		print(' 		|                       /help Decode/Encode                              |')
 		print(' 		|                                                                        |')
-		print(' 		| Type "/de + [option] + data" to decode data with your option.          |')
-		print(' 		| Type "/en + [option] + data" to encode data with your option.          |')
+		print(' 		| Type "/de + [option] + <data>" to decode data with your option.        |')
+		print(' 		| Type "/en + [option] + <data>" to encode data with your option.        |')
 		print(' 		|                                                                        |')
 		print(' 		| [option]                                                               |')
 		print(' 		| -b64: base64                                                           |')
 		print(' 		| -ce[k]: Ceasar #decode does not require [k]                            |')
 		print(' 		|                                                                        |')
 		print(' 		|                                                                        |')
-		print(' 		| Type "/hash + [option] + data" to hash your data with your option.     |')
+		print(' 		| Type "/hash + [option] + <data>" to hash your data with your option.   |')
 		print(' 		|                                                                        |')
 		print(' 		| [option] #hash                                                         |')
 		print(' 		| -md5   : MD5                                                           |')
@@ -307,6 +339,12 @@ def is_number(n):
 		int(n)
 		return True
 	except:
+		return False
+
+def is_positive(n):
+	if n > 0:
+		return True
+	else: 
 		return False
 
 def is_float(n):
