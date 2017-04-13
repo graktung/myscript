@@ -332,33 +332,24 @@ def introduction():
 	subprocess.call('title = March', shell=True)
 	print("""
 				
-				            Nguyen Thanh Trung — Gr^k-T
 
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTT+:::::::::::::::::::::::::::::::+TTTTTTTT
-				TTTTTTTTT:                               :TTTTTTTT
-				TTTTTTTTT:                               :TTTTTTTT
-				TTTTTTTTT:      ........................./TTTTTTTT
-				TTTTTTTTT:      :25/06/2016-ateotsmerthdTTTTTTTTTT
-				TTTTTTTTT:      :NguyenThanhTrung?$=???+TTTTTTTTTT
-				TTTTTTTTT:      :Trung/.               :TTTTTTTTTT
-				TTTTTTTTT:      :ThanhTrung/.          :TTTTTTTTTT
-				TTTTTTTTT:      :ThanhTrung\^^^/       :TTTTTTTTTT
-				TTTTTTTTT:      :ThanhTrung^^.         :TTTTTTTTTT
-				TTTTTTTTT:      :Trung^^.              :TTTTTTTTTT
-				TTTTTTTTT:      :.-               -/^^TTTTTTTTTTTT
-				TTTTTTTTT:                   -/^^TTTTTTTTTTTTTTTTT
-				TTTTTTTTT:              -+^^TTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTT:         :+^^TTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTT:    :+^^TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTT+25/06TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-				TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+bbbbbbbb                                                                                                                                                       
+b::::::b            lllllll                                       kkkkkkkk                                                                                     
+b::::::b            l:::::l                                       k::::::k                                                                                     
+b::::::b            l:::::l                                       k::::::k                                                                                     
+b:::::b            l:::::l                                       k::::::k                                                                                     
+b:::::bbbbbbbbb     l::::l   aaaaaaaaaaaaa       cccccccccccccccc k:::::k    kkkkkkkrrrrr   rrrrrrrrr      ooooooooooo       ssssssssss       eeeeeeeeeeee    
+b::::::::::::::bb   l::::l   a::::::::::::a    cc:::::::::::::::c k:::::k   k:::::k r::::rrr:::::::::r   oo:::::::::::oo   ss::::::::::s    ee::::::::::::ee  
+b::::::::::::::::b  l::::l   aaaaaaaaa:::::a  c:::::::::::::::::c k:::::k  k:::::k  r:::::::::::::::::r o:::::::::::::::oss:::::::::::::s  e::::::eeeee:::::ee
+b:::::bbbbb:::::::b l::::l            a::::a c:::::::cccccc:::::c k:::::k k:::::k   rr::::::rrrrr::::::ro:::::ooooo:::::os::::::ssss:::::se::::::e     e:::::e
+b:::::b    b::::::b l::::l     aaaaaaa:::::a c::::::c     ccccccc k::::::k:::::k     r:::::r     r:::::ro::::o     o::::o s:::::s  ssssss e:::::::eeeee::::::e
+b:::::b     b:::::b l::::l   aa::::::::::::a c:::::c              k:::::::::::k      r:::::r     rrrrrrro::::o     o::::o   s::::::s      e:::::::::::::::::e 
+b:::::b     b:::::b l::::l  a::::aaaa::::::a c:::::c              k:::::::::::k      r:::::r            o::::o     o::::o      s::::::s   e::::::eeeeeeeeeee  
+b:::::b     b:::::b l::::l a::::a    a:::::a c::::::c     ccccccc k::::::k:::::k     r:::::r            o::::o     o::::ossssss   s:::::s e:::::::e           
+b:::::bbbbbb::::::bl::::::la::::a    a:::::a c:::::::cccccc:::::ck::::::k k:::::k    r:::::r            o:::::ooooo:::::os:::::ssss::::::se::::::::e          
+b::::::::::::::::b l::::::la:::::aaaa::::::a  c:::::::::::::::::ck::::::k  k:::::k   r:::::r            o:::::::::::::::os::::::::::::::s  e::::::::eeeeeeee  
+b:::::::::::::::b  l::::::l a::::::::::aa:::a  cc:::::::::::::::ck::::::k   k:::::k  r:::::r             oo:::::::::::oo  s:::::::::::ss    ee:::::::::::::e  
+bbbbbbbbbbbbbbbb   llllllll  aaaaaaaaaa  aaaa    cccccccccccccccckkkkkkkk    kkkkkkk rrrrrrr               ooooooooooo     sssssssssss        eeeeeeeeeeeeee
 """)
 	input()
 	print('\n'*10)
