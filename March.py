@@ -52,13 +52,17 @@ class my_webbrowser:
 					url = 'https://www.youtube.com/results?search_query='+yt_search
 					webbrowser.open_new(url)
 				elif cmd_lst[0].lower() == "/gi":
+					if len(cmd_lst) > 2:
+						print('\'{}\': command not found'.format(cmd[1:]))
+						print('Type "/help" for more information')
+						continue
 					image_list = []
 					complete_image_list = []
 					i = 1
-					num = ' '.join(cmd_lst[1:])
-					if is_number(num) == True:
+					num = ' '.join(cmd_lst[1])
+					if is_number(num):
 						num = int(num)
-						if is_positive(num) == True:
+						if is_positive(num):
 							try:
 								while i <= num:
 									random_image = random.choice(my_webbrowser.get_image())
