@@ -59,17 +59,20 @@ class my_webbrowser:
 					if is_number(num) == True:
 						num = int(num)
 						if is_positive(num) == True:
-							while i <= num:
-								random_image = random.choice(my_webbrowser.get_image())
-								image_list.append(random_image)
-								i+=1
-							for each in image_list:
-								if each not in complete_image_list:
-									complete_image_list.append(each)
-							for image in complete_image_list:
-								webbrowser.open(image)
+							try:
+								while i <= num:
+									random_image = random.choice(my_webbrowser.get_image())
+									image_list.append(random_image)
+									i+=1
+								for each in image_list:
+									if each not in complete_image_list:
+										complete_image_list.append(each)
+								for image in complete_image_list:
+									webbrowser.open(image)
+							except:
+								print('Some Error have occurred.')
 					else:
-						"ValueError: '<q>' must be int and positive. '{}' is given".format(num)	
+						print("ValueError: '<q>' must be int and positive. '{}' is given".format(num))
 				elif cmd_lst[0].lower() == '/bm':
 					print('\n')
 					menu()
