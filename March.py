@@ -75,6 +75,8 @@ class my_webbrowser:
 									webbrowser.open(image)
 							except:
 								print('Some Error have occurred.')
+						else:
+							print("ValueError: '<q>' must be int and positive. '{}' is given".format(num))
 					else:
 						print("ValueError: '<q>' must be int and positive. '{}' is given".format(num))
 				elif cmd_lst[0].lower() == '/bm':
