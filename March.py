@@ -59,7 +59,7 @@ class my_webbrowser:
 					image_list = []
 					complete_image_list = []
 					i = 1
-					num = ' '.join(cmd_lst[1])
+					num = cmd_lst[1]
 					if is_number(num):
 						num = int(num)
 						if is_positive(num):
