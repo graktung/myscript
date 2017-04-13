@@ -365,7 +365,7 @@ def main_menu():
                                     | 2. Decode/Encode - Hash     |
                                     |                             |
                                     |                             |
-                                    |      © Copyright Gr^k-T     |
+                                    |      © Copyright blackrose  |
                                     |                             |
                                     +=============================+
 """)
