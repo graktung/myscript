@@ -129,8 +129,10 @@ class my_deencode:
 			except ValueError:
 				return 'ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return ' ' + str(encoded.decode('ascii'))
-		elif option.lower().startswith('-ce['):
-			if option.count('[') > 1 or option.count(']') > 1:
+		elif option.lower().startswith('-ce'):
+			if not option.lower().startswith('-ce['):
+				return 'Invalid option.\nType /help for more information' 
+			elif option.count('[') > 1 or option.count(']') > 1:
 				return "Invalid 'k'"
 			elif '[' in option.lower() and ']' in option.lower():
 				k = option[option.index('[')+1:option.index(']')]
@@ -162,7 +164,7 @@ class my_deencode:
 			else:
 				return "Required argument 'k'"
 		else:
-			return 'Invalid option.\n Type /help for more information'
+			return 'Invalid option.\nType /help for more information'
 
 	def hash(data, option):
 		if data == '':
@@ -203,8 +205,10 @@ class my_deencode:
 			except ValueError:
 				return 'ValueError. Your data contains invalid alphabet. \'{}\' given'.format(data)
 			return ' ' + hashed
-		elif option.lower().startswith('-shake128['):
-			if option.count('[') > 1 or option.count(']') > 1:
+		elif option.lower().startswith('-shake128'):
+			if not option.lower().startswith('-shake128['):
+				return 'Invalid option.\nType /help for more information'
+			elif option.count('[') > 1 or option.count(']') > 1:
 				return 'Invalid length'
 			elif '[' in option.lower() and ']' in option.lower():
 				length = option[option.index('[')+1:option.index(']')]
@@ -229,7 +233,9 @@ class my_deencode:
 			else:
 				return "Required argument 'length'"
 		elif option.lower().startswith('-shake256['):
-			if option.count('[') > 1 or option.count(']') > 1:
+			if not option.lower().startswith('-shake256['):
+				return 'Invalid option.\nType /help for more information'
+			elif option.count('[') > 1 or option.count(']') > 1:
 				return 'Invalid length'
 			elif '[' in option.lower() and ']' in option.lower():
 				length = option[option.index('[')+1:option.index(']')]
