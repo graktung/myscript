@@ -3,8 +3,9 @@
 # Author: Gr^k-T - Nguyen Thanh Trung
 # Author: L-101 - Nguyen Ba Khuong Duy
 
+import time
+
 try:
-	import time
 	import os
 	import webbrowser
 	import sys
@@ -14,6 +15,8 @@ try:
 	import random, requests
 	from bs4 import BeautifulSoup
 except:
+	print('Some errors have occured.')
+	time.sleep(1)
 	exit()
 
 full_ascii_char = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
