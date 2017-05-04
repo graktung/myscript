@@ -1,16 +1,20 @@
 # March.py
 # Python --version: 3.6.0
 # Author: Gr^k-T - Nguyen Thanh Trung
+# Author: L-101 - Nguyen Ba Khuong Duy
 
-import time
-import os
-import webbrowser
-import sys
-import subprocess
-import base64
-import hashlib
-import random, requests
-from bs4 import BeautifulSoup
+try:
+	import time
+	import os
+	import webbrowser
+	import sys
+	import subprocess
+	import base64
+	import hashlib
+	import random, requests
+	from bs4 import BeautifulSoup
+except:
+	exit()
 
 full_ascii_char = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
