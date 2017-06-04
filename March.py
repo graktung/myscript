@@ -1,8 +1,3 @@
-# March.py
-# Python --version: 3.6.0
-# Author: Gr^k-T - Nguyen Thanh Trung
-# Author: L-101 - Nguyen Ba Khuong Duy
-
 import time
 
 try:
